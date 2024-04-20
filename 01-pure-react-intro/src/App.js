@@ -1,8 +1,8 @@
 const Car = props => {
   return React.createElement('div', null, [
-    React.createElement('h2', {}, props.brand),
-    React.createElement('h3', {}, props.model),
-    React.createElement('h3', {}, props.year),
+    React.createElement('h1', {}, props.brand),
+    React.createElement('h2', {}, props.model),
+    React.createElement('h2', {}, props.year)
   ])
 }
 
@@ -12,17 +12,17 @@ const App = () => {
     React.createElement(Car, {
       brand: 'Ford',
       model: 'Mustang',
-      year: 1964,
+      year: 1964
     }),
     React.createElement(Car, {
       brand: 'Ford',
       model: 'Fiesta',
-      year: 2019,
+      year: 2019
     }),
     React.createElement(Car, {
       brand: 'Ford',
       model: 'Focus',
-      year: 2018,
+      year: 2018
     })
   ])
 }

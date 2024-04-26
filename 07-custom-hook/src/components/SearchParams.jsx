@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Car from "./Car";
 import useModelList from "../hooks/useModelList";
+import useCarList from "../hooks/useCarList";
 
 const brands = ["Skoda", "Opel", "Volkswagen", "Toyota", "Fiat"];
 
@@ -10,19 +11,11 @@ const SearchParams = () => {
   const [model, setModel] = useState("");
   const [models] = useModelList(brand);
 
-  const [cars, setCars] = useState([]);
-
-  useEffect(() => {
-    requestCars();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  async function requestCars() {
-    const res = await fetch(
-      `https://vse-react-basic.vercel.app/api/cars?location=${location}&brand=${brand}&model=${model}`,
-    );
-    const json = await res.json();
-    setCars(json);
-  }
+  const { cars, requestCars, isLoading } = useCarList({
+    location,
+    brand,
+    model,
+  });
 
   return (
     <div>
@@ -75,7 +68,7 @@ const SearchParams = () => {
         </select>
         <button className="btn mt-4">Search</button>
       </form>
-      <div>
+      <div className={isLoading ? "opacity-45" : ""}>
         {cars?.map((car) => (
           <Car
             key={car.id}
@@ -84,6 +77,7 @@ const SearchParams = () => {
             price={car.price}
             color={car.color}
             image={car.image}
+            location={car.location}
           />
         ))}
       </div>

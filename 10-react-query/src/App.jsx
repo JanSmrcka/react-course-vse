@@ -5,10 +5,15 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import CarDetails from "./components/CarDetails";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
+
 const App = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {},
-  });
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

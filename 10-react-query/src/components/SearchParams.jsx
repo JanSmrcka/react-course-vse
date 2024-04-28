@@ -1,7 +1,8 @@
 import { useState } from "react";
-import useModelList from "../hooks/useModelList";
 import useCarList from "../hooks/useCarList";
 import CarList from "./CarList";
+import { useQuery } from "@tanstack/react-query";
+import requestModelList from "../apis/requestModelList";
 
 const brands = ["Skoda", "Opel", "Volkswagen", "Toyota", "Fiat"];
 
@@ -10,7 +11,12 @@ const SearchParams = () => {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
 
-  const [models] = useModelList(brand);
+  const models = useQuery({
+    queryKey: ["models", brand],
+    queryFn: requestModelList,
+    enabled: !!brand,
+  });
+
   const { cars, requestCars, isLoading } = useCarList({
     location,
     brand,
@@ -55,12 +61,12 @@ const SearchParams = () => {
         <select
           className="form-field"
           id="model"
-          disabled={!models.length}
+          disabled={!models.data?.length}
           value={model}
           onChange={(e) => setModel(e.target.value)}
         >
           <option value={""} />
-          {models.map((brand) => (
+          {models.data?.map((brand) => (
             <option key={brand} value={brand}>
               {brand}
             </option>

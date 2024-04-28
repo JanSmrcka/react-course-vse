@@ -1,3 +1,12 @@
+/* const Car = (props) => {
+  return React.createElement("div", null, [
+    React.createElement("h2", {}, props.brand),
+    React.createElement("h3", {}, props.model),
+    React.createElement("h3", {}, props.year),
+    React.createElement("h3", {}, props.price),
+  ]);
+}; */
+
 const Car = (props) => {
   return (
     <div>

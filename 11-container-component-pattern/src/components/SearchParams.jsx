@@ -17,6 +17,7 @@ const SearchParams = () => {
     enabled: !!brand,
   });
 
+
   const { cars, requestCars, isLoading } = useCarList({
     location,
     brand,
@@ -61,7 +62,7 @@ const SearchParams = () => {
         <select
           className="form-field"
           id="model"
-          disabled={!models?.length}
+          disabled={!models.lenght}
           value={model}
           onChange={(e) => setModel(e.target.value)}
         >

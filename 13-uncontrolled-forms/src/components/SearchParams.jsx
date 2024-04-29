@@ -1,26 +1,29 @@
 import { useState } from "react";
-import useCarList from "../hooks/useCarList";
 import CarList from "./CarList";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import fetchModelList from "../apis/fetchModelList";
+import fetchCarList from "../apis/fetchCarList";
 
 const brands = ["Skoda", "Opel", "Volkswagen", "Toyota", "Fiat"];
 
 const SearchParams = () => {
-  const [location, setLocation] = useState("");
   const [brand, setBrand] = useState("");
-  const [model, setModel] = useState("");
+  const [searchParams, setSearchParams] = useState({
+    location: "",
+    model: "",
+    brand: "",
+  });
 
-  const {data: models} = useQuery({
+  const models = useQuery({
     queryKey: ["models", brand],
     queryFn: fetchModelList,
     enabled: !!brand,
   });
 
-  const { cars, requestCars, isLoading } = useCarList({
-    location,
-    brand,
-    model,
+  const cars = useQuery({
+    queryKey: ["cars", searchParams],
+    queryFn: fetchCarList,
+    placeholderData: keepPreviousData,
   });
 
   return (
@@ -28,26 +31,31 @@ const SearchParams = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          requestCars();
+          const formData = new FormData(e.target);
+          const obj = {
+            location: formData.get("location") ?? "",
+            brand: formData.get("brand") ?? "",
+            model: formData.get("model") ?? "",
+          };
+          setSearchParams(obj);
         }}
         className="flex flex-col rounded-md bg-lime-300 px-10 py-5 shadow-sm shadow-gray-400"
       >
         <label htmlFor="location">Location</label>
         <input
           type="text"
+          name="location"
           id="location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
           className="form-field"
         />
         <label htmlFor="brand">Brand</label>
         <select
           className="form-field"
+          name="brand"
           id="brand"
           value={brand}
           onChange={(e) => {
             setBrand(e.target.value);
-            setModel("");
           }}
         >
           <option value={""} />
@@ -60,13 +68,12 @@ const SearchParams = () => {
         <label htmlFor="model">Model</label>
         <select
           className="form-field"
+          name="model"
           id="model"
-          disabled={!models?.length}
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
+          disabled={!models?.data?.length}
         >
           <option value={""} />
-          {models?.map((brand) => (
+          {models.data?.map((brand) => (
             <option key={brand} value={brand}>
               {brand}
             </option>
@@ -74,7 +81,7 @@ const SearchParams = () => {
         </select>
         <button className="btn mt-4">Search</button>
       </form>
-      <CarList cars={cars} isLoading={isLoading} />
+      <CarList cars={cars.data} isLoading={cars.isFetching} />
     </div>
   );
 };

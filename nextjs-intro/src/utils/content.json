@@ -1,0 +1,4 @@
+{
+  "api/todo/create": "this is how to create todos",
+  "api/todo/get": "This is how to get todos"
+}

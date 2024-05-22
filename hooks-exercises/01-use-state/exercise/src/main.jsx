@@ -2,7 +2,14 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import './App.css'
 
-export function useState(initialValue) {}
+function useState(initialValue) {
+  const setValue = newValue => {
+    // Update the state somewhere
+    // Re-render
+  }
+
+  // return the current value and the setter
+}
 
 function App() {
   const [count, setCount] = useState(0)

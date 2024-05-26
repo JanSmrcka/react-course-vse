@@ -1,12 +1,22 @@
 import { Component } from "react";
 
 class Carousel extends Component {
+  /* constructor(props) {
+    super(props);
+    this.handleClickImage = this.handleClickImage.bind(this);
+  } */
   state = {
     active: 0,
   };
   static defaultProps = {
     images: [""],
   };
+
+  /* handleClickImage(e) {
+    this.setState({
+      active: e.target.dataset.index,
+    });
+  } */
 
   handleClickImage = (e) => {
     this.setState({

@@ -31,7 +31,7 @@ const CarDetailsComponent = (props) => {
       </div>
       <div className="mt-6 border-t border-gray-100">
         <dl className="divide-y divide-gray-100">
-          <DetailsParam label="Year" value={props.car.year} />
+          <DetailParam label="Year" value={props.car.year} />
           <DetailParam label="Price" value={props.car.price + " " + "CZK"} />
           <DetailParam label="Color" value={props.car.color} />
           <DetailParam label="Location" value={props.car.location} />

@@ -19,7 +19,7 @@ const Modal = ({ children }) => {
         {children}
       </div>
     </div>,
-    elRef.current,
+    document.getElementById("portal"),
   );
 };
 

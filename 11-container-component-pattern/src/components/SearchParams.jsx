@@ -11,12 +11,11 @@ const SearchParams = () => {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
 
-  const {data: models} = useQuery({
+  const { data: models } = useQuery({
     queryKey: ["models", brand],
     queryFn: fetchModelList,
     enabled: !!brand,
   });
-
 
   const { cars, requestCars, isLoading } = useCarList({
     location,
@@ -62,7 +61,7 @@ const SearchParams = () => {
         <select
           className="form-field"
           id="model"
-          disabled={!models.lenght}
+          disabled={!models?.lenght}
           value={model}
           onChange={(e) => setModel(e.target.value)}
         >

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import CarDetailComponent from "./CarDetail.comp";
 import fetchCar from "../../apis/fetchCar";
+import CarDetailsComponent from "./CarDetails.comp";
 
 const CarDetailsContainer = () => {
   const { id } = useParams();
@@ -11,6 +11,6 @@ const CarDetailsContainer = () => {
     queryFn: fetchCar,
   });
 
-  return <CarDetailComponent car={data} isLoading={isLoading} />;
+  return <CarDetailsComponent car={data} isLoading={isLoading} />;
 };
 export default CarDetailsContainer;
